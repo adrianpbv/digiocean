@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "com.digiocean.examp"
-version = "0.0.1-SNAPSHOT"
+version = "1.0"
 
 java {
     toolchain {
@@ -29,7 +29,7 @@ jib {
         executable = "/usr/local/bin/docker"
     }
     to {
-        image = "adrianjpbv/${project.name}:s4"
+        image = "adrianjpbv/${project.name}:v$version"
         auth {
             // TODO set environment variables
             username = System.getenv("DOCKER_USERNAME") ?: project.findProperty("docker.username") as String?
@@ -41,10 +41,15 @@ jib {
 dependencies {
     // Spring
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
 
     // Lombok
     compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
+
+    // MySQL
+    runtimeOnly("com.mysql:mysql-connector-j")
 
     // Test
     testImplementation("org.springframework.boot:spring-boot-starter-test")

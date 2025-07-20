@@ -1,1 +1,1 @@
-rootProject.name = "digitalOcean"
+rootProject.name = "digi-ocean"
