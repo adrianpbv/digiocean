@@ -8,6 +8,8 @@ plugins {
 group = "com.digiocean.examp"
 version = "1.0"
 
+val activeProfile = "production"
+
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(21)
@@ -28,8 +30,12 @@ jib {
     dockerClient {
         executable = "/usr/local/bin/docker"
     }
+    from {
+        image = "amazoncorretto:21.0.8" // from docker hub
+    }
     to {
-        image = "adrianjpbv/${project.name}:v$version"
+//        image = "adrianjpbv/${project.name}:v$version" // DOCKER_HUB
+        image = "registry.digitalocean.com/do-hub/${project.name}:${activeProfile}" // Digital Ocean registry
         auth {
             // TODO set environment variables
             username = System.getenv("DOCKER_USERNAME") ?: project.findProperty("docker.username") as String?
